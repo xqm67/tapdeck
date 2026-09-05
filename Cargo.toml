@@ -1,0 +1,30 @@
+[package]
+name = "tapdeck"
+version = "0.1.0"
+edition = "2024"
+description = "Trasforma iPhone o Android in una Stream Deck fatta in casa: griglia di tasti con loghi ufficiali che controllano il PC Windows via Wi-Fi"
+license = "MIT"
+rust-version = "1.85"
+
+[dependencies]
+eframe = "0.36.1"
+image = "0.25.10"
+local-ip-address = "0.6.13"
+qrcodegen = "1.8.0"
+rfd = "0.17.2"
+rust-embed = "8.12.0"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+tiny_http = "0.12.0"
+ureq = "2"
+
+[build-dependencies]
+embed-resource = "3.0.11"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[target."cfg(windows)".dependencies]
+winreg = "0.56.0"
