@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Controlli
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test
+
+      - name: Build release
+        run: cargo build --release --verbose
+
+      - name: Prepara l'archivio
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp target/release/tapdeck.exe dist/
+          cp install.ps1 dist/
+          cp res/icon.ico dist/
+          cd dist
+          7z a -tzip ../tapdeck-windows.zip tapdeck.exe install.ps1 icon.ico
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: tapdeck-windows.zip
+          generate_release_notes: true
