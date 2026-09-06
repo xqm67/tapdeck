@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0f1117">
+<title>TapDeck</title>
+<meta name="description" content="La tua Stream Deck fatta in casa">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TapDeck">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">
+      <span class="logo-dot"></span>
+      <span id="conn" class="conn off" data-i18n-title="Connessione al PC"></span>
+    </div>
+    <div id="page-title" class="page-title"></div>
+    <div class="brand">
+      <button id="fs" class="icon-btn" data-i18n-title="Schermo intero">⛶</button>
+      <button id="reload" class="icon-btn" data-i18n-title="Aggiorna">↻</button>
+    </div>
+  </header>
+
+  <nav id="dots" class="dots"></nav>
+
+  <main id="grid" class="grid"></main>
+
+  <div id="toasts" class="toasts"></div>
+
+  <div id="fs-guide" class="pin-screen hidden">
+    <div class="pin-card fs-card">
+      <h1 data-i18n-text="Schermo intero su iPhone">Schermo intero su iPhone</h1>
+      <p data-i18n-text="Safari su iPhone non ha il pulsante fullscreen. Per usare TapDeck a schermo intero, aggiungilo alla schermata Home e aprilo da lì.">
+        Safari su iPhone non ha il pulsante fullscreen. Per usare TapDeck a schermo
+        intero, aggiungilo alla schermata Home e aprilo da lì.
+      </p>
+      <ol class="fs-steps">
+        <li data-i18n-text="Tocca il pulsante Condividi (il quadrato con la freccia su).">Tocca il pulsante Condividi (il quadrato con la freccia su).</li>
+        <li data-i18n-text="Scegli «Aggiungi alla schermata Home».">Scegli «Aggiungi alla schermata Home».</li>
+        <li data-i18n-text="Apri l'icona TapDeck: si avvierà senza barre del browser, in verticale e orizzontale.">Apri l'icona TapDeck: si avvierà senza barre del browser, in verticale e orizzontale.</li>
+      </ol>
+      <p class="fs-note" data-i18n-text="Nota: se TapDeck è già nella schermata Home, elimina l'icona e aggiungilo di nuovo (la vecchia versione non ha la modalità a schermo intero).">
+        Nota: se TapDeck è già nella schermata Home, elimina l'icona e aggiungilo
+        di nuovo (la vecchia versione non ha la modalità a schermo intero).
+      </p>
+      <button id="fs-guide-close" data-i18n-text="OK">OK</button>
+    </div>
+  </div>
+
+  <div id="pin-screen" class="pin-screen hidden">
+    <div class="pin-card">
+      <h1>TapDeck</h1>
+      <p data-i18n-text="Questo PC richiede un codice di accesso.">Questo PC richiede un codice di accesso.</p>
+      <input id="pin-input" type="password" inputmode="numeric" autocomplete="off"
+             placeholder="Codice PIN" aria-label="Codice PIN"
+             data-i18n-ph="Codice PIN" data-i18n-aria="Codice PIN">
+      <button id="pin-ok" data-i18n-text="Entra">Entra</button>
+      <p id="pin-error" class="pin-error hidden" data-i18n-text="Codice errato, riprova.">Codice errato, riprova.</p>
+    </div>
+  </div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
