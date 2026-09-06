@@ -28,17 +28,35 @@ jobs:
       - name: Build release
         run: cargo build --release --verbose
 
-      - name: Prepara l'archivio
+      - name: Compila l'installer (Inno Setup)
+        shell: powershell
+        run: |
+          $candidates = @(
+            "$env:ProgramFiles(x86)\Inno Setup 6\ISCC.exe",
+            "$env:ProgramFiles\Inno Setup 6\ISCC.exe"
+          )
+          $iscc = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $iscc) {
+            choco install innosetup -y --no-progress
+            $iscc = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          }
+          if (-not $iscc) { throw "ISCC.exe non trovato dopo l'installazione di Inno Setup" }
+          & $iscc installer.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Get-ChildItem dist\*.exe | ForEach-Object { Write-Host "Setup: $($_.FullName) ($($_.Length) bytes)" }
+
+      - name: Prepara l'archivio portatile
         shell: bash
         run: |
           mkdir -p dist
           cp target/release/tapdeck.exe dist/
-          cp install.ps1 dist/
           cp res/icon.ico dist/
           cd dist
-          7z a -tzip ../tapdeck-windows.zip tapdeck.exe install.ps1 icon.ico
+          7z a -tzip ../tapdeck-windows.zip tapdeck.exe icon.ico
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: tapdeck-windows.zip
+          files: |
+            dist/TapDeck-Setup-*.exe
+            tapdeck-windows.zip
           generate_release_notes: true
