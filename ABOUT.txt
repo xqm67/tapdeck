@@ -1,0 +1,5 @@
+TapDeck — la tua Stream Deck fatta in casa
+
+Trasforma iPhone o Android in una griglia di tasti remoti per Windows:
+loghi ufficiali, un tocco, un'azione sul PC (apri programma, apri sito, chiudi app).
+Un solo .exe in Rust, installazione vera, nessuna telemetria.
